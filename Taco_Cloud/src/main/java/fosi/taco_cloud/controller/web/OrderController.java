@@ -1,6 +1,7 @@
 package fosi.taco_cloud.controller.web;
 
 import fosi.taco_cloud.entity.TacoOrder;
+import fosi.taco_cloud.repository.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -18,6 +19,13 @@ import javax.validation.Valid;
 @SessionAttributes("tacoOrder")
 public class OrderController
 {
+    private final OrderRepository orderRepository;
+
+    public OrderController(OrderRepository orderRepository)
+    {
+        this.orderRepository = orderRepository;
+    }
+
     @GetMapping("/current")
     public String orderForm()
     {
@@ -32,7 +40,7 @@ public class OrderController
             return "orderForm";
         }
 
-        log.info("Order submitted: {}", order);
+        orderRepository.save(order);
         sessionStatus.setComplete();
 
         return "redirect:/";
