@@ -1,9 +1,9 @@
-package fosi.taco_cloud.controller.tacos;
+package fosi.taco_cloud.controller;
 
-import fosi.taco_cloud.entity.tacos.Ingredient;
-import fosi.taco_cloud.entity.tacos.Ingredient.Type;
-import fosi.taco_cloud.entity.tacos.Taco;
-import fosi.taco_cloud.entity.tacos.TacoOrder;
+import fosi.taco_cloud.entity.Ingredient;
+import fosi.taco_cloud.entity.Ingredient.Type;
+import fosi.taco_cloud.entity.Taco;
+import fosi.taco_cloud.entity.TacoOrder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

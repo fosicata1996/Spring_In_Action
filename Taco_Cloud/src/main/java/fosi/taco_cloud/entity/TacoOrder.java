@@ -1,4 +1,4 @@
-package fosi.taco_cloud.entity.tacos;
+package fosi.taco_cloud.entity;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;

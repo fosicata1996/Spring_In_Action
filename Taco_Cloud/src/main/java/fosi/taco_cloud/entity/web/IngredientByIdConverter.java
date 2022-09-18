@@ -1,6 +1,6 @@
-package fosi.taco_cloud.entity.tacos.web;
+package fosi.taco_cloud.entity.web;
 
-import fosi.taco_cloud.entity.tacos.Ingredient;
+import fosi.taco_cloud.entity.Ingredient;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

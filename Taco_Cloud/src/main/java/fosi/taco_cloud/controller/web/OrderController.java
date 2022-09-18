@@ -1,6 +1,6 @@
-package fosi.taco_cloud.controller.tacos.web;
+package fosi.taco_cloud.controller.web;
 
-import fosi.taco_cloud.entity.tacos.TacoOrder;
+import fosi.taco_cloud.entity.TacoOrder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
