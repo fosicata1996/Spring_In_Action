@@ -6,6 +6,7 @@ import fosi.taco_cloud.entity.Taco;
 import fosi.taco_cloud.entity.TacoOrder;
 import fosi.taco_cloud.repository.IngredientRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -32,11 +33,11 @@ public class DesignTacoController
     @ModelAttribute
     public void addIngredientToModel(Model model)
     {
-        List<Ingredient> ingredients = ingredientRepository.findAll();
+        Iterable<Ingredient> ingredients = ingredientRepository.findAll();
 
         for (Type type : Type.values())
         {
-            model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
+            model.addAttribute(type.toString().toLowerCase(), filterByType(Streamable.of(ingredients).toList(), type));
         }
     }
 
