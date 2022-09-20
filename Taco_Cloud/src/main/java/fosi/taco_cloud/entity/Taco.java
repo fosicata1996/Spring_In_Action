@@ -1,29 +1,21 @@
 package fosi.taco_cloud.entity;
 
-import fosi.taco_cloud.entity.udt.IngredientUDT;
-import fosi.taco_cloud.entity.udt.TacoUDT;
 import lombok.Data;
-import org.springframework.data.cassandra.core.cql.Ordering;
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
-import org.springframework.data.cassandra.core.mapping.Table;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Data
-@Table("tacos")
+@Entity
 public class Taco
 {
-    @PrimaryKeyColumn(type = PrimaryKeyType.PARTITIONED)
-    private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    @PrimaryKeyColumn(type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
     private Date createdAt = new Date();
 
     @NotNull
@@ -31,16 +23,11 @@ public class Taco
     private String name;
 
     @Size(min = 1, message = "You must choose at least 1 ingredient")
-    @Column("ingredients")
-    private List<IngredientUDT> ingredients = new ArrayList<IngredientUDT>();
+    @ManyToMany()
+    private List<Ingredient> ingredients;
 
     public void addIngredient(Ingredient ingredient)
     {
-        this.ingredients.add(ingredient.toUDT());
-    }
-
-    public TacoUDT toUDT()
-    {
-        return new TacoUDT(name, ingredients);
+        this.ingredients.add(ingredient);
     }
 }
