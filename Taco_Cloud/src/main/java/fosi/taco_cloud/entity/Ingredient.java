@@ -1,21 +1,30 @@
 package fosi.taco_cloud.entity;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 @Data
-@Table
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 public class Ingredient implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private final String id;
-    private final String name;
-    private final Type type;
+    private String id;
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     public enum Type
     {
