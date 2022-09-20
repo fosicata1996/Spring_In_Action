@@ -1,22 +1,10 @@
 package fosi.taco_cloud.repository;
 
 import fosi.taco_cloud.entity.TacoOrder;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.Date;
-import java.util.List;
+import java.util.UUID;
 
-public interface OrderRepository extends CrudRepository<TacoOrder, Long>
+public interface OrderRepository extends CrudRepository<TacoOrder, UUID>
 {
-    List<TacoOrder> findByDeliveryZip(String deliveryZip);
-
-    List<TacoOrder> readOrdersByDeliveryZipAndPlacedAtBetween(String deliveryZip, Date startDate, Date endDate);
-
-    List<TacoOrder> findByDeliveryNameAndDeliveryCityAllIgnoreCase(String deliveryName, String deliveryCity);
-
-    List<TacoOrder> findByDeliveryCityOrderByDeliveryName(String city);
-
-    @Query("SELECT o from TacoOrder o where o.deliveryCity='Seattle'")
-    List<TacoOrder> readOrdersDeliveredInSeattle();
 }

@@ -1,30 +1,28 @@
 package fosi.taco_cloud.entity;
 
+import fosi.taco_cloud.entity.udt.IngredientUDT;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import java.io.Serializable;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-public class Ingredient implements Serializable
+@Table("ingredients")
+public class Ingredient
 {
-    private static final long serialVersionUID = 1L;
-
-    @Id
+    @PrimaryKey
     private String id;
     private String name;
-
-    @Enumerated(EnumType.STRING)
     private Type type;
+
+    public IngredientUDT toUDT()
+    {
+        return new IngredientUDT(name, type);
+    }
 
     public enum Type
     {
