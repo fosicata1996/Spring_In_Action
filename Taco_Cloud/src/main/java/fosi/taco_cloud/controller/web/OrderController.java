@@ -1,11 +1,11 @@
 package fosi.taco_cloud.controller.web;
 
+import fosi.taco_cloud.configuration.OrderProps;
 import fosi.taco_cloud.entity.TacoOrder;
 import fosi.taco_cloud.entity.security.User;
 import fosi.taco_cloud.repository.OrderRepository;
 import fosi.taco_cloud.repository.security.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,23 +24,18 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
-@ConfigurationProperties(prefix = "taco.orders")
 public class OrderController
 {
-    private int pageSize = 20;
+    private final OrderProps orderProps;
 
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
 
-    public OrderController(OrderRepository orderRepository, UserRepository userRepository)
+    public OrderController(OrderRepository orderRepository, UserRepository userRepository, OrderProps orderProps)
     {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
-    }
-
-    public void setPageSize(int pageSize)
-    {
-        this.pageSize = pageSize;
+        this.orderProps = orderProps;
     }
 
     @GetMapping("/current")
@@ -76,7 +71,7 @@ public class OrderController
     @GetMapping
     public String ordersForUser(@AuthenticationPrincipal User user, Model model)
     {
-        Pageable pageable = PageRequest.of(0, pageSize);
+        Pageable pageable = PageRequest.of(0, orderProps.getPageSize());
 
         model.addAttribute("orders", orderRepository.findByUserOrderByPlacedAtDesc(user, pageable));
 
