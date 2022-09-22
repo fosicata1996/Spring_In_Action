@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import java.util.Optional;
 
 @Configuration
-@EnableGlobalMethodSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig
 {
     public static final String USER = "ROLE_USER";
