@@ -44,9 +44,9 @@ public class SecurityConfig
             .formLogin()
             .loginPage("/login")
             .defaultSuccessUrl("/design")
-            .loginProcessingUrl("/authenticate")
-            .usernameParameter("user")
-            .passwordParameter("pwd")
+            .and()
+            .logout()
+            .logoutSuccessUrl("/")
             .and()
             .build();
 

@@ -8,7 +8,7 @@ public class RegistrationForm
 {
     private String username;
     private String password;
-    private String fullName;
+    private String fullname;
     private String street;
     private String city;
     private String state;
@@ -18,6 +18,6 @@ public class RegistrationForm
     public User toUser(PasswordEncoder passwordEncoder)
     {
         return new User(username, passwordEncoder.encode(password),
-            fullName, street, city, state, zip, phone);
+            fullname, street, city, state, zip, phone);
     }
 }
