@@ -48,6 +48,9 @@ public class SecurityConfig
             .usernameParameter("user")
             .passwordParameter("pwd")
             .and()
+            .oauth2Login()
+            .loginPage("/login")
+            .and()
             .build();
 
         /*
