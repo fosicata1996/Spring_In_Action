@@ -3,6 +3,7 @@ package fosi.taco_cloud.configuration.security;
 import fosi.taco_cloud.repository.security.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import java.util.Optional;
 
 @Configuration
+@EnableGlobalMethodSecurity
 public class SecurityConfig
 {
     public static final String USER = "ROLE_USER";

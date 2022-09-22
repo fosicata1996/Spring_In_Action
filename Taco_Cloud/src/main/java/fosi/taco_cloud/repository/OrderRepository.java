@@ -19,4 +19,9 @@ public interface OrderRepository extends CrudRepository<TacoOrder, Long>
 
     @Query("SELECT o from TacoOrder o where o.deliveryCity='Seattle'")
     List<TacoOrder> readOrdersDeliveredInSeattle();
+
+    /**
+     * @ PostAuthorize ("hasRole('ADMIN') || returnObject.user.username == authentication.name")
+     * TacoOrder getOrder(long id);
+     */
 }
