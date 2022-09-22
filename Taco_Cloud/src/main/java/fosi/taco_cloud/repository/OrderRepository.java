@@ -1,6 +1,8 @@
 package fosi.taco_cloud.repository;
 
 import fosi.taco_cloud.entity.TacoOrder;
+import fosi.taco_cloud.entity.security.User;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -19,6 +21,8 @@ public interface OrderRepository extends CrudRepository<TacoOrder, Long>
 
     @Query("SELECT o from TacoOrder o where o.deliveryCity='Seattle'")
     List<TacoOrder> readOrdersDeliveredInSeattle();
+
+    List<TacoOrder> findByUserOrderByPlacedAtDesc(User user, Pageable pageable);
 
     /**
      * @ PostAuthorize ("hasRole('ADMIN') || returnObject.user.username == authentication.name")

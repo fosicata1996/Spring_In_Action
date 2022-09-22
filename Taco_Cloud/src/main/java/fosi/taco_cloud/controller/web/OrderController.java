@@ -5,8 +5,12 @@ import fosi.taco_cloud.entity.security.User;
 import fosi.taco_cloud.repository.OrderRepository;
 import fosi.taco_cloud.repository.security.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +24,11 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
+@ConfigurationProperties(prefix = "taco.orders")
 public class OrderController
 {
+    private int pageSize = 20;
+
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
 
@@ -29,6 +36,11 @@ public class OrderController
     {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
+    }
+
+    public void setPageSize(int pageSize)
+    {
+        this.pageSize = pageSize;
     }
 
     @GetMapping("/current")
@@ -59,5 +71,15 @@ public class OrderController
         sessionStatus.setComplete();
 
         return "redirect:/";
+    }
+
+    @GetMapping
+    public String ordersForUser(@AuthenticationPrincipal User user, Model model)
+    {
+        Pageable pageable = PageRequest.of(0, pageSize);
+
+        model.addAttribute("orders", orderRepository.findByUserOrderByPlacedAtDesc(user, pageable));
+
+        return "orderList";
     }
 }
